@@ -8,13 +8,35 @@
   <meta name="Description" content="Demonstration for project-1">
 
   <style>
-    :root, html, body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--ddd-accent-1);
+    .host {
+      --un-sdg-goal-1: rgb(235, 28, 44);
+      --un-sdg-goal-2: rgb(210, 160, 42);
+      --un-sdg-goal-3: rgb(44, 155, 72);
+      --un-sdg-goal-4: rgb(194, 31, 51);
+      --un-sdg-goal-5: rgb(239, 64, 42);
+      --un-sdg-goal-6: rgb(0, 173, 216);
+      --un-sdg-goal-7: rgb(253, 183, 19);
+      --un-sdg-goal-8: rgb(143, 23, 55);
+      --un-sdg-goal-9: rgb(243, 109, 36);
+      --un-sdg-goal-10: rgb(224, 21, 131);
+      --un-sdg-goal-11: rgb(249, 157, 37);
+      --un-sdg-goal-12: rgb(207, 141, 42);
+      --un-sdg-goal-13: rgb(72, 119, 61);
+      --un-sdg-goal-14: rgb(0, 125, 187);
+      --un-sdg-goal-15: rgb(63, 175, 73);
+      --un-sdg-goal-16: rgb(1, 85, 138);
+      --un-sdg-goal-17: rgb(25, 54, 103);
+
+      display: block;
+      width: var(--width, 254px);
+      height: var(--height, 254px);
+      background-color: white;
     }
     #demo {
       margin: var(--ddd-spacing-2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     project-1 {
       margin: var(--ddd-spacing-2);
@@ -29,17 +51,115 @@
       background-color: var(--ddd-accent-2);
       color: var(--ddd-primary-17);
     }
+
   </style>
-  <title>project-1</title>
+  <title>UN-SDG</title>
 </head>
 
 <body>
   <div id="demo">
-    <h1>project-1</h1>
-    <!-- this is going to do whatever the tag's defaults are -->
+    <h1>UN-SDG</h1>
+
+    <label for="goal">Choose a goal:</label>
+
+    <!-- create a drop down list to choose the goal -->
+    <select name="goal" id="goal">
+      <!-- list of options for the drop down, as well as the values and description associated -->
+      <option value="1" data-description="No poverty">1</option>
+      <option value="2" data-description="Zero hunger">2</option>
+      <option value="3" data-description="Good health and well-being">3</option>
+      <option value="4" data-description="Quality education">4</option>
+      <option value="5" data-description="Gender equality">5</option>
+      <option value="6" data-description="Clean water and sanitation">6</option>
+      <option value="7" data-description="Affordable and clean energy">7</option>
+      <option value="8" data-description="Decent work and economic growth">8</option>
+      <option value="9" data-description="Industry, innovation, and infrastructure">9</option>
+      <option value="10" data-description="Reduced inequalities">10</option>
+      <option value="11" data-description="Sustainable cities and communities">11</option>
+      <option value="12" data-description="Responsible consumption and production">12</option>
+      <option value="13" data-description="Climate action">13</option>
+      <option value="14" data-description="Life below water">14</option>
+      <option value="15" data-description="Life on land">15</option>
+      <option value="16" data-description="Peace, justice, and strong institutions">16</option>
+      <option value="17" data-description="Partnerships for the goals">17</option>
+      <option value="18" data-description="All 17 goals">Circle</option>
+      <option value="19" data-description="Displaying all 17 goals">All</option>
+    </select>
+
+    <!-- button to randomize value -->
+    <button id="randomButton">Randomize</button>
+
+    <!-- button to block the color -->
+    <label>
+      <input type="checkbox" id="blockColor"> Block Color
+    </label>
+
+    <!-- display chosen goal -->
+    <p>Your selected goal: <span id="selectedGoal">None</span></p>
+    <p>Description: <span id="description">Null</span></p>
+    <!-- change the size of the image from here -->
+    <img loading="lazy" fetchpriority="low" id="goalImage" src="" style="width: 254px; height: auto" >
+
+    <script>
+      document.getElementById('goal').addEventListener('change', function() {
+        // logic for selecting description and image based on goal chosen
+          var selectedValue = this.value;
+          var selectedDescription = this.options[this.selectedIndex].dataset.description;
+          var goalImage = document.getElementById('goalImage');
+          
+          // logic for circle and all goals
+          if (selectedValue === "18"){
+            goalImage.src = `pictures/circle.svg`;
+          }
+          else if (selectedValue === "19"){
+            goalImage.src = `pictures/all.svg`;
+          }
+          else {
+            goalImage.src = `pictures/${selectedValue}.svg`;
+          }            
+
+          document.getElementById('selectedGoal').textContent = selectedValue;
+          document.getElementById('description').textContent = selectedDescription || "No description available";
+      });
+    </script>
+
+    <script>
+      // logic for randomize button
+      document.getElementById('randomButton').addEventListener('click', function() {
+
+          var selectElement = document.getElementById('goal');
+          var randomIndex = Math.floor(Math.random() * 19);
+          
+          // set the selected option to the random index
+          selectElement.selectedIndex = randomIndex;
+    
+          // to trigger onchange
+          selectElement.dispatchEvent(new Event('change'));
+      });
+    </script>
+
+    <script>
+      document.getElementById('blockColor').addEventListener('change', function() {
+        const goalImage = document.getElementById('goalImage');
+        const selectedValue = document.getElementById('goal').value;
+        if (this.checked) {
+          if (selectedValue === "18"){
+            goalImage.src = `pictures/circle.svg`;
+          }
+          else if (selectedValue === "19"){
+            goalImage.src = `pictures/all.svg`;
+          }
+          else {
+            goalImage.src = `blockColor/${selectedValue}.svg`;
+          }        
+        }
+      })
+    </script>
+    
+    
     <h2>Default</h2>
-    <project-1></project-1>
-    <h2>Slot usage</h2>
+    <project-1 goal="1"></project-1>
+    <!-- <h2>Slot usage</h2> -->
     <project-1 data-accent="2" data-primary="17"><div>Sample slot content</div></project-1>
     <h2>Property usage</h2>
     <project-1 id="example" title="Sample property title"></project-1>

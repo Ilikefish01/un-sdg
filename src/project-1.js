@@ -9,12 +9,24 @@ export class project1 extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.title = "";
+    this.title = "title";
+    this.goal = "0";
+    this.image = "Image";
+    this.description = "Description";
+    this.label = "Label";
+    this.size = "Size";
+    this.color = "Color";
   }
 
   static get properties() {
     return {
       title: { type: String },
+      goal: { type: Number },
+      image: { type: String },
+      description: { type: String },
+      label: { type: String },
+      size: { type: Number },
+      color: { type: Boolean },
     };
   }
 
@@ -41,10 +53,8 @@ export class project1 extends DDDSuper(LitElement) {
 
   render() {
     return html`
-<div class="wrapper">
-  <div>${this.title}</div>
-  <slot></slot>
-</div>`;
+    <div class="wrapper">
+    </div>`;
   }
 
   /**
