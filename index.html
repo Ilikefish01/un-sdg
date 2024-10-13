@@ -72,9 +72,8 @@
     <button id="randomButton">Randomize</button>
 
     <!-- button to block the color -->
-    <label>
-      <input type="checkbox" id="blockColor"> Block Color
-    </label>
+    <button id="blockColor">Block Color</button>
+
 
     <!-- display chosen goal -->
     <p>Your selected goal: <span id="selectedGoal">None</span></p>
@@ -121,10 +120,11 @@
     </script>
 
     <script>
-      document.getElementById('blockColor').addEventListener('change', function() {
+      // logic for block color button
+      document.getElementById('blockColor').addEventListener('click', function() {
+        // if the button is pressed, then use the images in the blockColor folder
         const goalImage = document.getElementById('goalImage');
         const selectedValue = document.getElementById('goal').value;
-        if (this.checked) {
           if (selectedValue === "18"){
             goalImage.src = `pictures/circle.svg`;
           }
@@ -134,7 +134,6 @@
           else {
             goalImage.src = `blockColor/${selectedValue}.svg`;
           }        
-        }
       })
     </script>
     
